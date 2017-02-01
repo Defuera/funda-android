@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FundaAssignment</string>
+    <string name="agent">Agent</string>
+    <string name="garden">Garden</string>
+</resources>

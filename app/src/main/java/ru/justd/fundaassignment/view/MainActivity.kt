@@ -1,12 +1,9 @@
 package ru.justd.fundaassignment.view
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
-import kotlinx.android.synthetic.main.activity_main.loader
-import kotlinx.android.synthetic.main.activity_main.recycler
+import ru.justd.fundaassignment.BaseActivity
 import ru.justd.fundaassignment.R
+import ru.justd.fundaassignment.presenter.MainPresenter
 
 /**
  * Determine which makelaar's in Amsterdam have the most object listed for sale.
@@ -14,16 +11,20 @@ import ru.justd.fundaassignment.R
  * listed for sale. For the assignment you may write a program in the language of your choice and
  * you may use any libraries that you find useful.
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
-    lateinit var mainPresenter : MainPresenter
+    private lateinit var presenter: MainPresenter
+
+    override fun getPresenter() = presenter
+
+    override fun getView() = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        presenter = MainPresenter() //this basically should be injected with dagger
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        loader.visibility = VISIBLE
-        recycler.visibility = INVISIBLE
     }
+
 
 }

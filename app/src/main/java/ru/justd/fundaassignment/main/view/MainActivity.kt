@@ -1,9 +1,9 @@
-package ru.justd.fundaassignment.view
+package ru.justd.fundaassignment.main.view
 
 import android.os.Bundle
-import ru.justd.fundaassignment.BaseActivity
+import ru.justd.fundaassignment.app.view.BaseActivity
 import ru.justd.fundaassignment.R
-import ru.justd.fundaassignment.presenter.MainPresenter
+import ru.justd.fundaassignment.main.presenter.MainPresenter
 
 /**
  * Determine which makelaar's in Amsterdam have the most object listed for sale.

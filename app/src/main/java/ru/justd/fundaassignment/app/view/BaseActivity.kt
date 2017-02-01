@@ -1,4 +1,4 @@
-package ru.justd.fundaassignment
+package ru.justd.fundaassignment.app.view
 
 import android.content.Intent
 import android.support.annotation.CallSuper

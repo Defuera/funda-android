@@ -1,7 +1,7 @@
-package ru.justd.fundaassignment.presenter
+package ru.justd.fundaassignment.main.presenter
 
 import ru.justd.fundaassignment.app.presenter.BasePresenter
-import ru.justd.fundaassignment.view.MainView
+import ru.justd.fundaassignment.main.view.MainView
 
 /**
  * Created by defuera on 01/02/2017.

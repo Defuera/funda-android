@@ -1,6 +1,6 @@
 package ru.justd.fundaassignment.app.presenter
 
-import ru.justd.fundaassignment.view.MainView
+import ru.justd.fundaassignment.main.view.MainView
 import rx.Completable
 import rx.Observable
 import rx.Single

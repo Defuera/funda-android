@@ -29,6 +29,8 @@ abstract class BasePresenter<V> {
         onViewDetached()
     }
 
+    fun view() = view!!
+
     abstract fun onViewAttached()
 
     open fun onViewDetached(){}

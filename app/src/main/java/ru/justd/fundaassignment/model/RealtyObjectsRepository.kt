@@ -9,13 +9,15 @@ import javax.inject.Singleton
  * Created by defuera on 05/02/2017.
  */
 @Singleton
-class RealtyObjectsRepository @Inject constructor(val apiService: ApiService){
+class RealtyObjectsRepository @Inject constructor(val apiService: ApiService) {
 
-    val INITIAL_PAGE = 0
-    val TYPE_PURCHASE = "koop"
-    val SEARCH_QUERY_GARDEN = "/amsterdam/tuin/"
-    val SEARCH_QUERY_REALTY = "/amsterdam/"
-    val PER_PAGE = 25
+    companion object {
+        const val INITIAL_PAGE = 0
+        const val TYPE_PURCHASE = "koop"
+        const val SEARCH_QUERY_GARDEN = "/amsterdam/tuin/"
+        const val SEARCH_QUERY_REALTY = "/amsterdam/"
+        const val PER_PAGE = 25
+    }
 
     fun loadObjects(page: Int): Single<ApiResponse<RealtyObject>> {
         return apiService

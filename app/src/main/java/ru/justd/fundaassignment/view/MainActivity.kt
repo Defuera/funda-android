@@ -1,9 +1,14 @@
 package ru.justd.fundaassignment.view
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.view.View
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.justd.fundaassignment.FundaApplication
 import ru.justd.arkitec.view.BaseActivity
 import ru.justd.fundaassignment.R
+import ru.justd.fundaassignment.model.RealtyObject
 import ru.justd.fundaassignment.presenter.MainPresenter
 import javax.inject.Inject
 
@@ -28,5 +33,23 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         setContentView(R.layout.activity_main)
     }
 
+    override fun showLoading() {
+        loader.visibility = View.VISIBLE
+        recycler.visibility = View.GONE
+    }
+
+    override fun showData(items: List<RealtyObject>) {
+        loader.visibility = View.GONE
+        recycler.visibility = View.VISIBLE
+        Toast.makeText(this, "first item: ${items[0].agentName}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showError(message: CharSequence?) {
+        if (message != null) {
+            Snackbar.make(recycler, message, Snackbar.LENGTH_SHORT).show()
+        } else {
+            Snackbar.make(recycler, R.string.unknown_error, Snackbar.LENGTH_SHORT).show()
+        }
+    }
 
 }

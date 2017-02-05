@@ -9,7 +9,7 @@ interface MainView {
 
     fun showLoading()
 
-    fun showData(findTopAgents: List<RealtyObject>)
+    fun showData(items: List<RealtyObject>)
 
     fun showError(message: CharSequence?)
 

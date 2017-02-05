@@ -29,6 +29,12 @@ class FundaModule {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(HttpLoggingInterceptor().setLevel(
+                        if (BuildConfig.DEBUG)
+                            HttpLoggingInterceptor.Level.BODY
+                        else
+                            HttpLoggingInterceptor.Level.BASIC)
+                )
                 .build()
     }
 

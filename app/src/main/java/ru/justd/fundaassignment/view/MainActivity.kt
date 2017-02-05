@@ -5,11 +5,12 @@ import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import ru.justd.fundaassignment.FundaApplication
 import ru.justd.arkitec.view.BaseActivity
+import ru.justd.fundaassignment.FundaApplication
 import ru.justd.fundaassignment.R
 import ru.justd.fundaassignment.model.RealtyObject
 import ru.justd.fundaassignment.presenter.MainPresenter
+import ru.justd.library.ProgressDialogFragment
 import javax.inject.Inject
 
 /**
@@ -31,15 +32,21 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         FundaApplication.component.inject(this)
 
         setContentView(R.layout.activity_main)
+
+        radio.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.agent -> presenter.loadRealty(debug.isChecked)
+                R.id.garden -> presenter.loadGardens(debug.isChecked)
+            }
+        }
     }
 
     override fun showLoading() {
-        loader.visibility = View.VISIBLE
-        recycler.visibility = View.GONE
+        ProgressDialogFragment.Builder(supportFragmentManager).create()
     }
 
     override fun showData(items: List<RealtyObject>) {
-        loader.visibility = View.GONE
+        ProgressDialogFragment.dismiss(supportFragmentManager)
         recycler.visibility = View.VISIBLE
         Toast.makeText(this, "first item: ${items[0].agentName}", Toast.LENGTH_SHORT).show()
     }

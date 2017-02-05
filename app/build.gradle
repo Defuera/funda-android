@@ -71,6 +71,7 @@ dependencies {
     // UI stuff
     compile 'com.github.m039:el-adapter:413722f663084c5b930cca19bbccc6e851594225'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.github.Defuera:lilwidgets:0.2'
 }
 
 repositories {

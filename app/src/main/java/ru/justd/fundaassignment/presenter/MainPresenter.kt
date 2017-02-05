@@ -4,6 +4,7 @@ import ru.justd.arkitec.presenter.BasePresenter
 import ru.justd.fundaassignment.model.ApiResponse
 import ru.justd.fundaassignment.model.RealtyObject
 import ru.justd.fundaassignment.model.RealtyObjectsRepository
+import ru.justd.fundaassignment.model.RealtyObjectsRepository.Companion.INITIAL_PAGE
 import ru.justd.fundaassignment.view.MainView
 import rx.Single
 import rx.functions.Action1
@@ -19,18 +20,27 @@ class MainPresenter @Inject constructor(
 
     companion object {
         const val AGENTS_TO_PRINT = 10
+        const val DEBUG_MODE_PAGE_COUNT = 3
     }
 
     val objectsToCount = HashMap<RealtyObject, Int>()
     var pageLimit: Int = 0
 
+    override fun onViewAttached() {}
 
-    override fun onViewAttached() {
-        loadObjects(RealtyObjectsRepository.INITIAL_PAGE, { page -> repository.loadObjects(page) })
+    fun loadRealty(debugMode: Boolean) {
+        pageLimit = if (debugMode) DEBUG_MODE_PAGE_COUNT else 0
+        view().showLoading()
+        loadObjects(INITIAL_PAGE, { page -> repository.loadObjects(page) })
+    }
+
+    fun loadGardens(debugMode: Boolean) {
+        pageLimit = if (debugMode) DEBUG_MODE_PAGE_COUNT else 0
+        view().showLoading()
+        loadObjects(INITIAL_PAGE, { page -> repository.loadObjectsWithGarden(page) })
     }
 
     private fun loadObjects(page: Int, single: (x: Int) -> Single<ApiResponse<RealtyObject>>) {
-        view().showLoading()
 
         subscribe(
                 single(page),
@@ -41,7 +51,7 @@ class MainPresenter @Inject constructor(
                     val currentPage = pagingInfo.currentPage
                     val lastPage = pagingInfo.lastPage
 
-                    if (currentPage == RealtyObjectsRepository.INITIAL_PAGE) {
+                    if (currentPage == INITIAL_PAGE) {
                         print("(total pages: $lastPage) ")
                     }
 

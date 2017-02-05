@@ -25,13 +25,13 @@ abstract class BaseActivity<out P : BasePresenter<V>, V> : AppCompatActivity() {
     }
 
     @CallSuper
-    open fun attachPresenter() = getPresenter().attachView(getView())
+    open fun attachPresenter() = presenter().attachView(view())
 
     @CallSuper
-    open fun detachPresenter() = getPresenter().detachView()
+    open fun detachPresenter() = presenter().detachView()
 
-    abstract fun getView(): V
+    abstract fun view(): V
 
-    abstract fun getPresenter(): P
+    abstract fun presenter(): P
 
 }

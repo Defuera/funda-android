@@ -19,6 +19,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "API_KEY", "\"005e7c1d6f6c4f9bacac16760286e3cd\""
+            buildConfigField "String", "HOST", "\"http://partnerapi.funda.nl/\""
+        }
+
+        debug {
+            buildConfigField "String", "API_KEY", "\"005e7c1d6f6c4f9bacac16760286e3cd\""
+            buildConfigField "String", "HOST", "\"http://partnerapi.funda.nl/\""
         }
     }
     sourceSets {

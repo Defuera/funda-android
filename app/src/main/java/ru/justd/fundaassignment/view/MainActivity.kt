@@ -1,10 +1,11 @@
-package ru.justd.fundaassignment.main.view
+package ru.justd.fundaassignment.view
 
 import android.os.Bundle
+import ru.justd.fundaassignment.FundaApplication
 import ru.justd.arkitec.view.BaseActivity
-import ru.justd.arkitech.view.BaseActivity
 import ru.justd.fundaassignment.R
-import ru.justd.fundaassignment.main.presenter.MainPresenter
+import ru.justd.fundaassignment.presenter.MainPresenter
+import javax.inject.Inject
 
 /**
  * Determine which makelaar's in Amsterdam have the most object listed for sale.
@@ -14,16 +15,16 @@ import ru.justd.fundaassignment.main.presenter.MainPresenter
  */
 class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
-    private lateinit var presenter: MainPresenter
+    @Inject lateinit var presenter: MainPresenter
 
-    override fun getPresenter() = presenter
+    override fun presenter() = presenter
 
-    override fun getView() = this
+    override fun view() = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        presenter = MainPresenter() //this basically should be injected with dagger
-
         super.onCreate(savedInstanceState)
+        FundaApplication.component.inject(this)
+
         setContentView(R.layout.activity_main)
     }
 

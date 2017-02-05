@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="ru.justd.arkitec.ArkitecApplication">
+        android:name=".FundaApplication">
 
-        <activity android:name="ru.justd.fundaassignment.main.view.MainActivity">
+        <activity android:name="ru.justd.fundaassignment.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

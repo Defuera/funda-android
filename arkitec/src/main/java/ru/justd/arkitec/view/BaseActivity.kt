@@ -1,9 +1,9 @@
-package ru.justd.fundaassignment.app.view
+package ru.justd.arkitec.view
 
 import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v7.app.AppCompatActivity
-import ru.justd.fundaassignment.app.presenter.BasePresenter
+import ru.justd.arkitec.presenter.BasePresenter
 
 abstract class BaseActivity<out P : BasePresenter<V>, V> : AppCompatActivity() {
 

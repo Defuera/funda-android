@@ -1,6 +1,6 @@
 package ru.justd.fundaassignment.main.presenter
 
-import ru.justd.fundaassignment.app.presenter.BasePresenter
+import ru.justd.arkitec.presenter.BasePresenter
 import ru.justd.fundaassignment.main.view.MainView
 
 /**
@@ -8,8 +8,10 @@ import ru.justd.fundaassignment.main.view.MainView
  */
 class MainPresenter : BasePresenter<MainView>() {
 
-    override fun onViewAttached() {
+//    lateinit var fundaRepository: FundaRepository
 
+    override fun onViewAttached() {
+        fundaRepository
     }
 
 }

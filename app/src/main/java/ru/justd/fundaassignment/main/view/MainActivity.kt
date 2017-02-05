@@ -1,7 +1,8 @@
 package ru.justd.fundaassignment.main.view
 
 import android.os.Bundle
-import ru.justd.fundaassignment.app.view.BaseActivity
+import ru.justd.arkitec.view.BaseActivity
+import ru.justd.arkitech.view.BaseActivity
 import ru.justd.fundaassignment.R
 import ru.justd.fundaassignment.main.presenter.MainPresenter
 

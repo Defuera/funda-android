@@ -1,6 +1,5 @@
-package ru.justd.fundaassignment.app.presenter
+package ru.justd.arkitec.presenter
 
-import ru.justd.fundaassignment.main.view.MainView
 import rx.Completable
 import rx.Observable
 import rx.Single

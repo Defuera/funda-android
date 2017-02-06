@@ -3,10 +3,14 @@ package ru.justd.fundaassignment.view
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
+import android.support.v7.widget.RecyclerView
+import android.widget.Button
+import android.widget.CheckBox
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.m039.el_adapter.ListItemAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.justd.arkitec.view.BaseActivity
+import ru.justd.fundaassignment.BuildConfig
 import ru.justd.fundaassignment.FundaApplication
 import ru.justd.fundaassignment.R
 import ru.justd.fundaassignment.model.RealtyObject
@@ -22,8 +26,22 @@ import javax.inject.Inject
  */
 class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
-    @Inject lateinit var presenter: MainPresenter
+    @Inject
+    lateinit var presenter: MainPresenter
 
+    @BindView(R.id.recycler)
+    lateinit var recycler : RecyclerView
+
+    @BindView(R.id.agent)
+    lateinit var agent : Button
+
+    @BindView(R.id.agent_with_garden)
+    lateinit var agentWithGarden : Button
+
+    @BindView(R.id.debug_checkbox)
+    lateinit var debug : CheckBox
+
+    private var snack: Snackbar? = null
     val adapter = ListItemAdapter()
 
     override fun presenter() = presenter
@@ -31,9 +49,10 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FundaApplication.component.inject(this)
-
         setContentView(R.layout.activity_main)
+
+        ButterKnife.bind(this)
+        FundaApplication.component.inject(this)
 
         adapter.addViewCreator(
                 RealtyObject::class.java,
@@ -41,8 +60,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         )
                 .addViewBinder(RealtyObjectWidget::bind)
 
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         agent.setOnClickListener {
             presenter.loadRealty(debug.isChecked)
@@ -50,27 +68,37 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         agentWithGarden.setOnClickListener {
             presenter.loadGardens(debug.isChecked)
         }
+
+        debug.isChecked = BuildConfig.DEBUG
     }
 
 
     //region MainView
 
     override fun showLoading() {
+        snack?.dismiss()
+        adapter.removeAllItems()
         ProgressDialogFragment.Builder(supportFragmentManager).create()
     }
 
     override fun showData(items: List<RealtyObject>) {
         ProgressDialogFragment.dismiss(supportFragmentManager)
-        recycler.visibility = View.VISIBLE
+        snack?.dismiss()
+
+        recycler.adapter = adapter
         adapter.addItems(items)
     }
 
     override fun showError(message: CharSequence?) {
+        ProgressDialogFragment.dismiss(supportFragmentManager)
+
         if (message != null) {
-            Snackbar.make(recycler, message, Snackbar.LENGTH_SHORT).show()
+            snack = Snackbar.make(recycler, message, Snackbar.LENGTH_INDEFINITE)
         } else {
-            Snackbar.make(recycler, R.string.unknown_error, Snackbar.LENGTH_SHORT).show()
+            snack = Snackbar.make(recycler, R.string.unknown_error, Snackbar.LENGTH_INDEFINITE)
         }
+
+        snack?.show()
     }
 
     //endregion

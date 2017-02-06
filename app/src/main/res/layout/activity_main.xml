@@ -6,7 +6,7 @@
     android:padding="@dimen/padding_16">
 
     <CheckBox
-        android:id="@+id/debug"
+        android:id="@+id/debug_checkbox"
         style="@style/Body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,15 +21,17 @@
         android:text="@string/show_agent" />
 
     <Button
-        android:id="@+id/agentWithGarden"
+        android:id="@+id/agent_with_garden"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_16"
         android:text="@string/show_agent_with_garden" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:overScrollMode="never" />
 
 </LinearLayout>

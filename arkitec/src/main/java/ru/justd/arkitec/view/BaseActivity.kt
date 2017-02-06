@@ -1,8 +1,10 @@
 package ru.justd.arkitec.view
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v7.app.AppCompatActivity
+import butterknife.ButterKnife
 import ru.justd.arkitec.presenter.BasePresenter
 
 abstract class BaseActivity<out P : BasePresenter<V>, V> : AppCompatActivity() {

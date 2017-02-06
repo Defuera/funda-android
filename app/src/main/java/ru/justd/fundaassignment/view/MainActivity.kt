@@ -43,7 +43,17 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
+
+        agent.setOnClickListener {
+            presenter.loadRealty(debug.isChecked)
+        }
+        agentWithGarden.setOnClickListener {
+            presenter.loadGardens(debug.isChecked)
+        }
     }
+
+
+    //region MainView
 
     override fun showLoading() {
         ProgressDialogFragment.Builder(supportFragmentManager).create()
@@ -62,5 +72,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
             Snackbar.make(recycler, R.string.unknown_error, Snackbar.LENGTH_SHORT).show()
         }
     }
+
+    //endregion
 
 }

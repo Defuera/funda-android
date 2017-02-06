@@ -2,6 +2,8 @@
     <string name="app_name">FundaAssignment</string>
     <string name="agent">Agent</string>
     <string name="garden">Garden</string>
-    <string name="unknown_error">Oops, something bad has happend</string>
+    <string name="unknown_error">Oops, something bad has happened</string>
     <string name="enable_debug">Enable debug</string>
+    <string name="show_agent">Display top agents</string>
+    <string name="show_agent_with_garden">Display top agents with garden</string>
 </resources>

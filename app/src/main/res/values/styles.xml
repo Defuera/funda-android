@@ -15,4 +15,8 @@
         <item name="lilProgressColor">@color/colorAccent</item>
     </style>
 
+    <style name="Body">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

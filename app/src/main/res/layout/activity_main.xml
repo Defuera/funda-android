@@ -7,36 +7,29 @@
 
     <CheckBox
         android:id="@+id/debug"
+        style="@style/Body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_16"
         android:text="@string/enable_debug" />
 
-    <RadioGroup
-        android:id="@+id/radio"
+    <Button
+        android:id="@+id/agent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/padding_16">
+        android:layout_marginBottom="@dimen/padding_8"
+        android:text="@string/show_agent" />
 
-        <RadioButton
-            android:id="@+id/agent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/agent" />
-
-        <RadioButton
-            android:id="@+id/garden"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/garden" />
-
-    </RadioGroup>
+    <Button
+        android:id="@+id/agent_with_garden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_agent_with_garden" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
 </LinearLayout>

@@ -2,8 +2,9 @@ package ru.justd.fundaassignment.view
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.Toast
+import com.m039.el_adapter.ListItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.justd.arkitec.view.BaseActivity
 import ru.justd.fundaassignment.FundaApplication
@@ -23,8 +24,9 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
     @Inject lateinit var presenter: MainPresenter
 
-    override fun presenter() = presenter
+    val adapter = ListItemAdapter()
 
+    override fun presenter() = presenter
     override fun view() = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +35,14 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
         setContentView(R.layout.activity_main)
 
-        radio.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.agent -> presenter.loadRealty(debug.isChecked)
-                R.id.garden -> presenter.loadGardens(debug.isChecked)
-            }
-        }
+        adapter.addViewCreator(
+                RealtyObject::class.java,
+                { parent -> RealtyObjectWidget(parent.context) }
+        )
+                .addViewBinder(RealtyObjectWidget::bind)
+
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapter
     }
 
     override fun showLoading() {
@@ -48,7 +52,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
     override fun showData(items: List<RealtyObject>) {
         ProgressDialogFragment.dismiss(supportFragmentManager)
         recycler.visibility = View.VISIBLE
-        Toast.makeText(this, "first item: ${items[0].agentName}", Toast.LENGTH_SHORT).show()
+        adapter.addItems(items)
     }
 
     override fun showError(message: CharSequence?) {

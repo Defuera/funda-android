@@ -7,9 +7,11 @@ import ru.justd.fundaassignment.model.RealtyObject
  */
 interface MainView {
 
-    fun showLoading()
-
     fun showData(items: List<RealtyObject>)
+
+    fun publishProgress(currentPage: Int, totalPages: Int)
+
+    fun showLoading()
 
     fun showError(message: CharSequence?)
 

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.m039.el_adapter.ListItemAdapter
@@ -30,16 +32,19 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
     lateinit var presenter: MainPresenter
 
     @BindView(R.id.recycler)
-    lateinit var recycler : RecyclerView
+    lateinit var recycler: RecyclerView
 
     @BindView(R.id.agent)
-    lateinit var agent : Button
+    lateinit var agent: Button
 
     @BindView(R.id.agent_with_garden)
-    lateinit var agentWithGarden : Button
+    lateinit var agentWithGarden: Button
 
     @BindView(R.id.debug_checkbox)
-    lateinit var debug : CheckBox
+    lateinit var debug: CheckBox
+
+    @BindView(R.id.progress)
+    lateinit var progress: TextView
 
     private var snack: Snackbar? = null
     val adapter = ListItemAdapter()
@@ -75,22 +80,30 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
     //region MainView
 
-    override fun showLoading() {
-        snack?.dismiss()
-        adapter.removeAllItems()
-        ProgressDialogFragment.Builder(supportFragmentManager).create()
-    }
-
     override fun showData(items: List<RealtyObject>) {
         ProgressDialogFragment.dismiss(supportFragmentManager)
+        progress.visibility = View.GONE
         snack?.dismiss()
 
         recycler.adapter = adapter
         adapter.addItems(items)
     }
 
+    override fun publishProgress(currentPage: Int, totalPages: Int) {
+        progress.text = getString(R.string.progress, currentPage, totalPages)
+    }
+
+    override fun showLoading() {
+        snack?.dismiss()
+        adapter.removeAllItems()
+        progress.text = null
+        progress.visibility = View.VISIBLE
+        ProgressDialogFragment.Builder(supportFragmentManager).create()
+    }
+
     override fun showError(message: CharSequence?) {
         ProgressDialogFragment.dismiss(supportFragmentManager)
+        progress.visibility = View.GONE
 
         if (message != null) {
             snack = Snackbar.make(recycler, message, Snackbar.LENGTH_INDEFINITE)

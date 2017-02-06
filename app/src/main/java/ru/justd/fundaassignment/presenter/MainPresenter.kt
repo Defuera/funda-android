@@ -51,15 +51,13 @@ class MainPresenter @Inject constructor(
 
                     val pagingInfo = response.pagingInfo
                     val currentPage = pagingInfo.currentPage
-                    val lastPage = pagingInfo.lastPage
-
-                    if (currentPage == INITIAL_PAGE) {
-                        print("(total pages: $lastPage) ")
-                    }
 
                     if (shouldProceedLoading(pagingInfo)) {
-                        //print progress
-                        print(".")
+
+                        view().publishProgress(
+                                currentPage,
+                                if (debugMode) DEBUG_MODE_PAGE_COUNT else pagingInfo.lastPage
+                        )
 
                         //Count agents realty objects
                         response.objects.forEach {

@@ -24,20 +24,22 @@ class MainPresenter @Inject constructor(
     }
 
     val objectsToCount = HashMap<RealtyObject, Int>()
-    var pageLimit: Int = 0
+    var debugMode = false
 
     override fun onViewAttached() {}
 
     fun loadRealty(debugMode: Boolean) {
-        pageLimit = if (debugMode) DEBUG_MODE_PAGE_COUNT else 0
-        view().showLoading()
-        loadObjects(INITIAL_PAGE, { page -> repository.loadObjects(page) })
+        prepareStartLoading(debugMode, { page -> repository.loadObjects(page) })
     }
 
     fun loadGardens(debugMode: Boolean) {
-        pageLimit = if (debugMode) DEBUG_MODE_PAGE_COUNT else 0
+        prepareStartLoading(debugMode, { page -> repository.loadObjectsWithGarden(page) })
+    }
+
+    private fun prepareStartLoading(debugMode: Boolean, single: (x: Int) -> Single<ApiResponse<RealtyObject>>) {
+        this.debugMode = debugMode
         view().showLoading()
-        loadObjects(INITIAL_PAGE, { page -> repository.loadObjectsWithGarden(page) })
+        loadObjects(INITIAL_PAGE, single)
     }
 
     private fun loadObjects(page: Int, single: (x: Int) -> Single<ApiResponse<RealtyObject>>) {
@@ -83,20 +85,27 @@ class MainPresenter @Inject constructor(
         )
     }
 
+    /**
+     * Checks whether it's last page, or debug limit is set
+     */
     fun shouldProceedLoading(pagingInfo: ApiResponse.PagingInfo): Boolean {
         val currentPage = pagingInfo.currentPage
-        if (pageLimit != 0) {
-            return currentPage < pageLimit
+        if (debugMode) {
+            return currentPage < DEBUG_MODE_PAGE_COUNT
         } else {
             return currentPage < pagingInfo.lastPage
         }
     }
 
+    /**
+     * @param count - number of objects to return
+     * @return agents with most object listed for sale.
+     */
     fun findTopAgents(count: Int, unsortedMap: HashMap<RealtyObject, Int>): List<RealtyObject> {
         val list = LinkedList(unsortedMap.entries)
         Collections.sort(list) { o1, o2 -> o2.value.compareTo(o1.value) }
 
-        val topList = list.subList(0, Math.min(count - 1, list.lastIndex))
+        val topList = list.subList(0, Math.min(count, list.lastIndex))
         return topList.map { it.key }
     }
 }

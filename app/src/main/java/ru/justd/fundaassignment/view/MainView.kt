@@ -1,13 +1,13 @@
 package ru.justd.fundaassignment.view
 
-import ru.justd.fundaassignment.model.RealtyObject
+import ru.justd.fundaassignment.model.Makelaar
 
 /**
  * Created by defuera on 01/02/2017.
  */
 interface MainView {
 
-    fun showData(items: List<RealtyObject>)
+    fun showData(items: List<Makelaar>)
 
     fun publishProgress(currentPage: Int, totalPages: Int)
 

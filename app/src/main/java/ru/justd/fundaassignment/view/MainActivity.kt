@@ -15,7 +15,7 @@ import ru.justd.arkitec.view.BaseActivity
 import ru.justd.fundaassignment.BuildConfig
 import ru.justd.fundaassignment.FundaApplication
 import ru.justd.fundaassignment.R
-import ru.justd.fundaassignment.model.RealtyObject
+import ru.justd.fundaassignment.model.Makelaar
 import ru.justd.fundaassignment.presenter.MainPresenter
 import ru.justd.library.ProgressDialogFragment
 import javax.inject.Inject
@@ -60,7 +60,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         FundaApplication.component.inject(this)
 
         adapter.addViewCreator(
-                RealtyObject::class.java,
+                Makelaar::class.java,
                 { parent -> RealtyObjectWidget(parent.context) }
         )
                 .addViewBinder(RealtyObjectWidget::bind)
@@ -80,7 +80,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
     //region MainView
 
-    override fun showData(items: List<RealtyObject>) {
+    override fun showData(items: List<Makelaar>) {
         ProgressDialogFragment.dismiss(supportFragmentManager)
         progress.visibility = View.GONE
         snack?.dismiss()

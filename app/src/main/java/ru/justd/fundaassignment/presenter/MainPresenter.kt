@@ -2,7 +2,7 @@ package ru.justd.fundaassignment.presenter
 
 import ru.justd.arkitec.presenter.BasePresenter
 import ru.justd.fundaassignment.model.ApiResponse
-import ru.justd.fundaassignment.model.RealtyObject
+import ru.justd.fundaassignment.model.Makelaar
 import ru.justd.fundaassignment.model.RealtyObjectsRepository
 import ru.justd.fundaassignment.model.RealtyObjectsRepository.Companion.INITIAL_PAGE
 import ru.justd.fundaassignment.view.MainView
@@ -23,7 +23,7 @@ class MainPresenter @Inject constructor(
         const val DEBUG_MODE_PAGE_COUNT = 3
     }
 
-    val objectsToCount = HashMap<RealtyObject, Int>()
+    val objectsToCount = HashMap<Makelaar, Int>()
     var debugMode = false
 
     override fun onViewAttached() {}
@@ -36,13 +36,13 @@ class MainPresenter @Inject constructor(
         prepareStartLoading(debugMode, { page -> repository.loadObjectsWithGarden(page) })
     }
 
-    private fun prepareStartLoading(debugMode: Boolean, single: (x: Int) -> Single<ApiResponse<RealtyObject>>) {
+    private fun prepareStartLoading(debugMode: Boolean, single: (x: Int) -> Single<ApiResponse<Makelaar>>) {
         this.debugMode = debugMode
         view().showLoading()
         loadObjects(INITIAL_PAGE, single)
     }
 
-    private fun loadObjects(page: Int, single: (x: Int) -> Single<ApiResponse<RealtyObject>>) {
+    private fun loadObjects(page: Int, single: (x: Int) -> Single<ApiResponse<Makelaar>>) {
 
         subscribe(
                 single(page),
@@ -61,12 +61,12 @@ class MainPresenter @Inject constructor(
 
                         //Count agents realty objects
                         response.objects.forEach {
-                            realty ->
-                            val objectsCount = objectsToCount[realty]
-                            if (objectsCount == null) {
-                                objectsToCount.put(realty, 1)
+                            makelaar ->
+                            val makelaarCount = objectsToCount[makelaar]
+                            if (makelaarCount == null) {
+                                objectsToCount.put(makelaar, 1)
                             } else {
-                                objectsToCount.put(realty, objectsCount + 1)
+                                objectsToCount.put(makelaar, makelaarCount + 1)
                             }
                         }
 
@@ -99,7 +99,7 @@ class MainPresenter @Inject constructor(
      * @param count - number of objects to return
      * @return agents with most object listed for sale.
      */
-    fun findTopAgents(count: Int, unsortedMap: HashMap<RealtyObject, Int>): List<RealtyObject> {
+    fun findTopAgents(count: Int, unsortedMap: HashMap<Makelaar, Int>): List<Makelaar> {
         val list = LinkedList(unsortedMap.entries)
         Collections.sort(list) { o1, o2 -> o2.value.compareTo(o1.value) }
 

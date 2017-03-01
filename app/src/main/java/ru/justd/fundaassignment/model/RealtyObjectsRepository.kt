@@ -19,12 +19,12 @@ class RealtyObjectsRepository @Inject constructor(val apiService: ApiService) {
         const val PER_PAGE = 25
     }
 
-    fun loadObjects(page: Int): Single<ApiResponse<RealtyObject>> {
+    fun loadObjects(page: Int): Single<ApiResponse<Makelaar>> {
         return apiService
                 .fetch(BuildConfig.API_KEY, TYPE_PURCHASE, SEARCH_QUERY_REALTY, page, PER_PAGE)
     }
 
-    fun loadObjectsWithGarden(page: Int): Single<ApiResponse<RealtyObject>> {
+    fun loadObjectsWithGarden(page: Int): Single<ApiResponse<Makelaar>> {
         return apiService
                 .fetch(BuildConfig.API_KEY, TYPE_PURCHASE, SEARCH_QUERY_GARDEN, page, PER_PAGE)
     }

@@ -17,5 +17,5 @@ interface ApiService {
             @Query("zo") searchQuery: String,
             @Query("page") page: Int,
             @Query("pageSize") pageSize: Int
-    ): Single<ApiResponse<RealtyObject>>
+    ): Single<ApiResponse<Makelaar>>
 }
